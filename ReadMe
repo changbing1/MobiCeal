@@ -1,0 +1,23 @@
+This is the source code of MobiCeal.
+Before using this code, you should read our DSN 2018 paper: MobiCeal: Towards Secure and Practical Plausibly Deniable Encryption on Mobile Devices.
+
+You can get the whole AOSP code from https://source.android.com/setup/downloading.
+The kernel source code is downloaded from https://source.android.com/setup/building-kernels.
+Note that we use Android 4.2.2 and LG Nexus 4 to implement our prototype.
+
+First, you should replace the files in the kernel with the files in the "Kernel" directory. Then you should compile the kernel and enable XTS, gf128mul and Thin Provisioning when configuring the kernel. Place the kernel image in the [ANDROID-SRC]/device/[VENDOR]/[PRODUCT]/ directory. The file must be named "kernel". For example, the Nexus 4 kernel binary should be placed at [ANDROID-SRC]/device/lge/mako/kernel.
+
+Then you should replace the files in AOSP with the files in the "Android" directory and compile the Android code.
+
+After you compile the code, you should use Android Image Kitchen(http://forum.xda-developers.com/showthread.php?t=2073775) to modify boot.img.
+You should put init.mako.rc to [BOOT]/ramdisk/ and replace the old one. What's more, you should compile LVM and thin provisioning tools for Android and put them in boot.img. You can get the source code from https://github.com/steven676/android-lvm-mod and https://github.com/jthornber/thin-provisioning-tools. You may get some help from https://raw.githubusercontent.com/steven676/android-lvm-mod/master/HOWTO-BUILD.
+
+After you compile LVM and thin provisioning tools, you should put lvm in [BOOT]/ramdisk/lvm/sbin/, lvm.conf in [BOOT]/ramdisk/lvm/etc, thin_check, thin_metadata_size and thin_rmap in [BOOT]/ramdisk/usr/sbin. Create the directory that you need. Then you can get the modified boot.img.
+
+Flash your phone with the new images and enjoy MobiCeal!
+
+If you have any questions or suggestions, please contact me!
+
+Bing Chang
+Secure Mobile Center, Singapore Management University
+bingchang@smu.edu.sg
